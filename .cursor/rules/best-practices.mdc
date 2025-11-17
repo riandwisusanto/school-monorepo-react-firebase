@@ -1,0 +1,83 @@
+---
+description: Best practices to implement for the tech stack used
+globs: 
+---
+React Best Practices:
+
+Use functional components and hooks instead of class components
+Implement proper React memo and useMemo for performance optimization
+Follow the React hooks rules strictly to avoid common pitfalls
+Utilize React.lazy and Suspense for code-splitting and better loading experience
+Implement proper error boundaries to handle and display errors gracefully
+
+React Hook Form Best Practices:
+
+Use the useForm hook for form state management and validation
+Implement custom validation rules using the validate option
+Utilize the watch function for real-time form value monitoring
+Use the reset function to clear form state after submission
+Implement proper error handling and display for form validation
+
+React Query Best Practices:
+
+Use useQuery for fetching and caching data
+Implement proper query keys for efficient caching and refetching
+Utilize useMutation for handling side effects like data updates
+Implement optimistic updates for a smoother user experience
+Use queryClient.invalidateQueries to refetch data after mutations
+
+Firebase Best Practices:
+
+Use Firebase Authentication for secure user management
+Implement Firebase Firestore for real-time data synchronization
+Utilize Firebase Storage for file uploads and management
+Implement proper security rules to protect your data
+Use Firebase Functions for server-side logic and to keep client-side code minimal
+
+Tailwind CSS Best Practices:
+
+Use utility classes for styling to keep CSS modular and reusable
+Implement custom themes using Tailwind's configuration file
+Utilize responsive design utilities for mobile-friendly layouts
+Use the @apply directive to create component-specific styles
+Implement proper purging to remove unused styles and optimize bundle size
+
+Zod Best Practices:
+
+Use Zod for runtime type checking and validation
+Implement custom validation rules using Zod's extensive API
+Utilize Zod's integration with React Hook Form for seamless form validation
+Implement proper error handling and display for validation errors
+Use Zod's inferred types for better TypeScript integration and type safety
+
+Date-fns Best Practices:
+
+Use date-fns for lightweight date manipulation and formatting
+Implement proper timezone handling for international applications
+Utilize the modular nature of date-fns to import only needed functions
+Implement custom date formatting using date-fns' format function
+Use date-fns' interval functions for calculating date differences
+
+Recharts Best Practices:
+
+Use Recharts for creating responsive and interactive charts
+Implement proper data formatting for chart readability
+Utilize Recharts' customization options for styling and theming
+Implement proper accessibility features for charts
+Use Recharts' animation features for smooth data transitions
+
+Framer Motion Best Practices:
+
+Use Framer Motion for creating smooth animations and transitions
+Implement proper performance optimization for complex animations
+Utilize Framer Motion's gesture recognition for interactive elements
+Implement custom easing functions for unique animation effects
+Use Framer Motion's layout animations for dynamic content changes
+
+Radix UI Best Practices:
+
+Use Radix UI components for accessible and customizable UI elements
+Implement proper theming and styling using Radix UI's API
+Utilize Radix UI's composition model for creating complex UI patterns
+Implement proper accessibility features for all Radix UI components
+Use Radix UI's state management utilities for controlled components
