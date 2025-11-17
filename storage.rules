@@ -1,0 +1,44 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Teacher attendance photos
+    match /teacher-attendance/{userId}/{allPaths=**} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read attendance photos
+      allow write: if request.auth != null &&
+        request.auth.uid == userId; // Users can only write to their own attendance folder
+      allow delete: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can delete photos
+    }
+
+    // Journal attachments
+    match /journal-attachments/{teacherId}/{allPaths=**} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read journal attachments
+      allow write: if request.auth != null &&
+        request.auth.uid == teacherId; // Teachers can only write to their own journal folder
+      allow delete: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can delete attachments
+    }
+
+    // User profile images
+    match /user-profiles/{userId}/{allPaths=**} {
+      allow read: if request.auth != null; // All authenticated users can read profile images
+      allow write: if request.auth != null &&
+        request.auth.uid == userId; // Users can only write to their own profile folder
+      allow delete: if request.auth != null &&
+        request.auth.uid == userId ||
+        request.auth.token.role in ['admin', 'tu']; // Users can delete their own photos, admins and TU can delete any
+    }
+
+    // Custom background images
+    match /custom-backgrounds/{userId}/{allPaths=**} {
+      allow read: if request.auth != null; // All authenticated users can read background images
+      allow write: if request.auth != null &&
+        request.auth.uid == userId; // Users can only write to their own background folder
+      allow delete: if request.auth != null &&
+        request.auth.uid == userId ||
+        request.auth.token.role in ['admin', 'tu']; // Users can delete their own backgrounds, admins and TU can delete any
+    }
+  }
+}
