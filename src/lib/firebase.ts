@@ -1,4 +1,7 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
+import { getAuth, GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -11,5 +14,14 @@ const firebaseConfig = {
 } satisfies FirebaseOptions
 
 const app = initializeApp(firebaseConfig)
+
+// Initialize Firebase services
+export const auth = getAuth(app)
+export const db = getFirestore(app)
+export const storage = getStorage(app)
+
+// Authentication providers
+export const googleProvider = new GoogleAuthProvider()
+export const emailProvider = new EmailAuthProvider()
 
 export default app

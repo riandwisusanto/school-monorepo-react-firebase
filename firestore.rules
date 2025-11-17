@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == userId || // Users can read/write their own data
+        request.auth.token.role in ['admin', 'tu'] // Admins and TU can manage all users
+      );
+    }
+
+    // Teachers collection
+    match /teachers/{teacherId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == userIdFromUser(teacherId) || // Teachers can read their own data
+        request.auth.token.role in ['admin', 'tu'] // Admins and TU can read all teachers
+      );
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can write teacher data
+    }
+
+    // Students collection
+    match /students/{studentId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read students
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can write student data
+    }
+
+    // Classes collection
+    match /classes/{classId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read classes
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can write class data
+    }
+
+    // Schedules collection
+    match /schedules/{scheduleId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read schedules
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can write schedule data
+    }
+
+    // Student attendance collection
+    match /studentAttendance/{attendanceId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read attendance
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // Teachers can submit attendance
+      allow delete: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can delete attendance
+    }
+
+    // Teacher journals collection
+    match /teacherJournals/{journalId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read journals
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // Teachers can write journals
+      allow delete: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can delete journals
+    }
+
+    // Teacher attendance collection
+    match /teacherAttendance/{attendanceId} {
+      allow read: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // All authenticated staff can read teacher attendance
+      allow write: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu', 'teacher']; // Teachers can check in their attendance
+      allow delete: if request.auth != null &&
+        request.auth.token.role in ['admin', 'tu']; // Only admins and TU can delete attendance
+    }
+  }
+}
+
+// Helper function to get user ID from teacher document
+function userIdFromUser(teacherId) {
+  return teacherId;
+}
